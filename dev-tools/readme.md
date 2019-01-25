@@ -29,7 +29,7 @@ Azure Dev Spaces: Prepare configuration files for Azure Dev Spaces
         - "**/target/classes/**"
         - "**/target/dependency/**/*.jar"
 ```
-8. F5 and wait for start and navigate to the url in IE: `http://localhost:61137/vets.html`
+8. run `mvn wro4j:run compile dependency:copy-dependencies` and F5 and wait for start and navigate to the url in IE: `http://localhost:61137/vets.html`
 9. Modify code in `VetController.java#showVetList` to remove the line `vets.getVetList().addAll(this.vets.findAll());` and wait the debug console showing the following changes:
  ```
 2019-01-25 14:21:36.120  INFO 60 --- [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
