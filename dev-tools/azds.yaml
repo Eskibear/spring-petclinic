@@ -1,0 +1,35 @@
+kind: helm-release
+apiVersion: 1.0
+build:
+  context: .
+  dockerfile: Dockerfile
+install:
+  chart: charts\spring-petclinic
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
+  set:
+    replicaCount: 1
+    image:
+      repository: spring-petclinic
+      tag: $(tag)
+      pullPolicy: Never
+    ingress:
+      hosts:
+      # This expands to [space.s.]spring-petclinic.<guid>.<region>.aksapp.io
+      - $(spacePrefix)spring-petclinic$(hostSuffix)
+configurations:
+  develop:
+    build:
+      dockerfile: Dockerfile.develop
+      useGitIgnore: false
+      useDockerIgnore: false
+    container:
+      syncTarget: /usr/src/app
+      sync:
+        - "**/target/classes/**"
+        - "**/target/dependency/**/*.jar"
+      iterate:
+        processesToKill: [java]
+        buildCommands:
+        - ["mvn","compile","-Dmaven.test.skip=true","-Dcheckstyle.skip=true","-Dmaven.javadoc.skip=true"]

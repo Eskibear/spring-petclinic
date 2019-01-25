@@ -1,0 +1,8 @@
+FROM maven:3.5-jdk-8-slim
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+COPY ./target/dependency ./target/dependency
+COPY ./target/classes ./target/classes
+
+ENTRYPOINT ["java","-cp","target/classes:target/dependency/*","org.springframework.samples.petclinic.PetClinicApplication"]
