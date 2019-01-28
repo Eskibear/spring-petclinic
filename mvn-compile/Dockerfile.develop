@@ -8,4 +8,4 @@ RUN /usr/local/bin/mvn-entrypoint.sh \
 COPY . .
 RUN mvn wro4j:run compile dependency:copy-dependencies -Dmaven.test.skip=true -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true
 
-ENTRYPOINT ["java","-cp","target/*:target/dependency/*","org.springframework.samples.petclinic.PetClinicApplication"]
+ENTRYPOINT ["java","-cp","./target/classes:./target/dependency/*","org.springframework.samples.petclinic.PetClinicApplication"]
